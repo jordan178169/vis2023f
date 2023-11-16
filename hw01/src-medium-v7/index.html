@@ -1,0 +1,297 @@
+<!--
+http://bl.ocks.org/ndarville/7075823
+https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
+-->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap'); */
+
+        @font-face {
+            font-family:'CircleFont'; /* src: url(https://circle472.github.io/ct2022s/hw04/CircleFont.ttf);  https://github.com/circle472/ct2022s/ */
+            src: url(CircleFont_v2.woff2); /* https://cloudconvert.com/ttf-to-woff2 */
+        }
+
+        h3 {
+            background-color: rgba(255, 255, 0, 0.1);
+            color: white; 
+            text-shadow: 0 0 6px #FF0000, 0 0 6px #000000;
+            font-family: 'CircleFont', 'Noto Serif JP', serif;
+            font-size: 18pt;
+            border: solid 1px black;
+            width: 90%;
+            margin: 5px auto;
+            padding: 10px;
+            text-align: center;
+        }
+
+        div {
+            background-color: rgba(255, 255, 0, 0.1);
+            font-family: 'CircleFont', 'Noto Serif JP', serif;
+            font-size: 16pt;
+            border: solid 1px black;
+            width: 90%;
+            margin: 5px auto;
+            padding: 10px;
+            text-align: center;
+        }
+
+        body {
+            background-color: rgba(255, 128, 255, 0.1);
+            font-family: 'CircleFont', 'Noto Serif JP', serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 2px black solid;
+            font-family: 'CircleFont', 'Noto Serif JP', serif;
+            font-size: 16pt;
+            /* font: 16px sans-serif; */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        td,
+        th {
+            border: 1px black solid;
+            padding: 5px;
+            background-color: rgba(128, 255, 255, 0.1);
+        }
+
+        td.left {
+            text-align: left;
+        }
+
+        td img {
+            transition: width, height;
+            transition-duration: 0.5s;
+            width: 50px;
+            height: 50px;
+            /* display: block; */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        img:hover {
+            box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
+
+        /*
+        .excellent-kid {
+            background-color: skyblue;
+        }
+
+        .good-kid {
+            background-color: pink;
+        }
+
+        .fair-kid {
+            background-color: pink;
+        }
+
+        .poor-kid {
+            background-color: pink;
+        }
+        */
+
+        td:hover img {
+            transition: width, height;
+            transition-duration: 0.5s;
+            width: 100px;
+            height: 100px;
+        }
+
+        td.excellent-kid:hover img {
+            animation-name: happy;
+            animation-duration: 0.5s;
+            animation-iteration-count: infinite;
+        }
+
+        td.good-kid:hover img {
+            animation-name: happy;
+            animation-duration: 1.0s;
+            animation-iteration-count: infinite;
+        }
+
+        td.fair-kid:hover img {
+            animation-name: angry;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+        }
+
+        td.poor-kid:hover img {
+            animation-name: angry;
+            animation-duration: 0.1s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes happy {
+            0% {transform: translateY(0px);}
+            25% {transform: translateY(-5px);}
+            50% {transform: translateY(0px);}
+            75% {transform: translateY(-5px);}
+            100% {transform: translateY(0px);}
+        }
+
+        @keyframes angry {
+            0% {transform: translate(1px, 3px);}
+            25% {transform: translate(7px, 2px);}
+            50% {transform: translate(4px, 5px);}
+            75% {transform: translate(12px, 3px);}
+            100% {transform: translate(2px, 0px);}
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3>Data Visualization 成績</h3>
+
+    <div id="div1"></div>
+
+    <div id="div2"></div>
+
+    <script type="text/javascript" charset="utf-8">
+
+        d3.select("#div1")
+            .append("table")
+            .append("tr")
+            .selectAll("td")
+            .data([10,9,8,7,6,5,4,3,2,1,0])
+            .enter()
+            .append("td")
+            .text(function (d, i) {
+                if (i <= 10 || isNaN(d)) {
+                    return d;
+                }
+            })
+            // img
+            .attr("class", function (d, i) { 
+                if (d == 10) return "excellent-kid"; 
+                else if (d >= 7 ) return "good-kid"; 
+                else if (d >= 2 ) return "fair-kid"; 
+                else return "poor-kid";})
+            .append("img")
+            .attr("src", function (d, i) { 
+                if (d == 10) return "./svg10/52.svg";
+                else if (d == 9) return "./svg10/51.svg";
+                else if (d == 8) return "./svg10/42.svg";
+                else if (d == 7) return "./svg10/41.svg";
+                else if (d == 6) return "./svg10/32.svg";
+                else if (d == 5) return "./svg10/31.svg";
+                else if (d == 4) return "./svg10/22.svg";
+                else if (d == 3) return "./svg10/21.svg";
+                else if (d == 2) return "./svg10/12.svg";
+                else if (d == 1) return "./svg10/11.svg";
+                else if (d == 0) return "./svg10/01.svg";
+                else return "./svg10/00.svg"; })
+            .attr("x", "0")
+            .attr("y", "0")
+            .attr("width",  function(d, i) { return (i + 1) * 60; })
+            .attr("height", function(d, i) { return (i + 1) * 60; });
+
+
+    var Container = d3.select("#div2");
+
+    d3.text("./csv/data.csv").then(function(data) {
+
+        var parsedCSV = d3.csvParseRows(data);
+
+
+        // 參考github
+        // 將二維陣列轉換為物件陣列
+        var headers = parsedCSV[0];
+        var data = parsedCSV.slice(1).map(function(row) {
+            var obj = {};
+            row.forEach(function(value, i) {
+                obj[headers[i]] = value;
+            });
+            return obj;
+        });
+
+        // 創建表格元素
+        var table = Container.append("table");
+        var thead = table.append("thead");
+        var tbody = table.append("tbody");
+
+        // 添加表頭
+        thead.append("tr")
+            .selectAll("th")
+            .data(headers)
+            .enter()
+            .append("th")
+            .text(function(d) { return d; });
+
+        // 添加表格行
+        var rows = tbody.selectAll("tr")
+            .data(data)
+            .enter()
+            .append("tr");
+
+        // 添加表格單元格
+        var cells = rows.selectAll("td")
+            .data(function(row) {
+                return headers.map(function(header) {
+                    return { header: header, value: row[header] };
+                });
+            })
+            .enter()
+            .append("td")
+            .html(function(d, i) {
+                if ( i == 4 && d.value != 'GitHub 帳號' ) {
+                    return '<a href="https://' + d.value + '.github.io/vis2023f/" target="_blank"><img src="https://' + d.value + '.github.io/vis2023f/hw00/me.jpg"></a>' + '<hr><a href="https://github.com/' + d.value + '/vis2023f/" target="_blank">' + d.value + '</a>';
+                }
+                else if ( i == 0 || i == 2 || isNaN(d.value)) {
+                    return d.value;
+                }
+            })
+            .filter(function (d, i) { return (i > 2 && !isNaN(d.value) && d.value != ""); })
+            .attr("class", function (d, i) { 
+                if (d.value == 10) return "excellent-kid"; 
+                else if (d.value >= 7 ) return "good-kid"; 
+                else if (d.value >= 2 ) return "fair-kid"; 
+                else return "poor-kid";})
+            .append("img")
+            .attr("src", function (d, i) {
+                if (d.value == 10) 
+                    return "./svg10/52.svg";
+                else if (d.value == 9) 
+                    return "./svg10/51.svg";
+                else if (d.value == 8) 
+                    return "./svg10/42.svg";
+                else if (d.value == 7) 
+                    return "./svg10/41.svg";
+                else if (d.value == 6) 
+                    return "./svg10/32.svg";
+                else if (d.value == 5) 
+                    return "./svg10/31.svg";
+                else if (d.value == 4) 
+                    return "./svg10/22.svg";
+                else if (d.value == 3) 
+                    return "./svg10/21.svg";
+                else if (d.value == 2) 
+                    return "./svg10/12.svg";
+                else if (d.value == 1) 
+                    return "./svg10/11.svg";
+                else if (d.value == 0) 
+                    return "./svg10/01.svg";
+                else 
+                    return "./svg10/00.svg";
+            })
+            .attr("width", 50)
+            .attr("height", 50);
+    });
+
+
+    </script>
+</body>
+
+</html>
