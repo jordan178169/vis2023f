@@ -1,0 +1,14 @@
+{
+  "name": "f79c4a596af8e8fd",
+  "main": "f79c4a596af8e8fd@20.js",
+  "version": "20.0.0",
+  "homepage": "https://observablehq.com/d/f79c4a596af8e8fd",
+  "author": {
+    "name": "杰's Workspace",
+    "url": "https://observablehq.com/@jie3-ws"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
